@@ -1,6 +1,5 @@
 package me.mattgd.saywhat;
 
-import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -65,7 +64,7 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	public void updateLocation(MouseEvent e)
 	{
 		rect.setLocation(preX + e.getX(), preY + e.getY());
-		checkRect();
+		checkRectangleBounds();
 	    repaint();
 	}
 
@@ -80,7 +79,6 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	    Dimension dim = getSize();
 	    int w = (int) dim.getWidth();
 	    int h = (int) dim.getHeight();
-	    g2.setStroke(new BasicStroke(8.0f));
 
 	    if (isFirstTime)
 	    {
@@ -95,11 +93,10 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 
 	    g2.setColor(Color.red);
 	    g2.draw(rect);
-	    g2.setColor(Color.black);
 	    g2.fill(rect);
 	}
 
-	boolean checkRect()
+	private boolean checkRectangleBounds()
 	{
 		if (area == null) return false;
 		if (area.contains(rect.x, rect.y, 100, 50)) return true;
