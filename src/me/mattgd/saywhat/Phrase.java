@@ -1,12 +1,13 @@
+package me.mattgd.saywhat;
+
 /**
  * @(#)Phrase.java
  *
  * @author Steve G and Matty D
  * @version 1.00 2016/5/19
  */
- 
- import java.util.*;
 
+import java.util.*;
 
 class Phrase implements Comparable<Phrase>
 {
@@ -21,7 +22,7 @@ class Phrase implements Comparable<Phrase>
     	}
     }
     
-    public ArrayList randomize()
+    public ArrayList<Word> randomize()
     {
     	ArrayList<Word> newOrder = words;
     	for(int i = 0; i < newOrder.size(); i++)

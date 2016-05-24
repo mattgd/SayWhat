@@ -1,3 +1,5 @@
+package me.mattgd.saywhat;
+
 /**
  * @(#)Word.java
  * @author Steve Greene and Matty D

@@ -1,3 +1,5 @@
+package me.mattgd.saywhat;
+
 /**
  * @(#)gameRunner.java
  *
@@ -5,10 +7,11 @@
  * @author Steve Greene and Matty D
  * @version 1.00 2016/5/23
  */
+
 import java.util.*;
 import java.io.*;
 
-public class gameRunner 
+public class GameRunner 
 {
     public static void main(String[] args) 
     {
@@ -23,6 +26,8 @@ public class gameRunner
 			{
 				phrases.add(new Phrase(reader.nextLine()));
 			}
+			
+			reader.close();
 		}
 		catch(Exception e)
 		{
