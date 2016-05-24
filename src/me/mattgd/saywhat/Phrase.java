@@ -40,7 +40,7 @@ class Phrase implements Comparable<Phrase>
     		}
     	}
     	
-    	if(count == newOrder.size())
+    	if(count == newOrder.size())  //modify this to change degree of mixed-up-ness
     	{
     		return randomize();
     	}
