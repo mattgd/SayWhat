@@ -64,4 +64,9 @@ class Phrase implements Comparable<Phrase>
     {
     	return toString().compareTo(phrase.toString());
     }
+    
+    public ArrayList<Word> getPhrase()
+    {
+    	return words;
+    }
 }
