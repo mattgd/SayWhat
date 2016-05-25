@@ -69,4 +69,9 @@ class Phrase implements Comparable<Phrase>
     {
     	return words;
     }
+    
+    public int getNumWords()
+    {
+    	return words.size();
+    }
 }
