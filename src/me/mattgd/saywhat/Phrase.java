@@ -62,10 +62,10 @@ class Phrase implements Comparable<Phrase>
     	
     public int compareTo(Phrase phrase)
     {
-    	return toString().compareTo(phrase.toString());
+    	return toString().compareTo(phrase.toString());  //will return 0 when the phrases are exactly equal
     }
     
-    public ArrayList<Word> getPhrase()
+    public ArrayList<Word> getPhrase() //passes arrayList to the game
     {
     	return words;
     }

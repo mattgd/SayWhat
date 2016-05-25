@@ -38,5 +38,6 @@ public class GameRunner
     	{
     		System.out.println(phrases.get(i).toString());
     	}
+    	System.out.println(phrases.get(0).compareTo(phrases.get(0))); //test the compareTo method
     }
 }
