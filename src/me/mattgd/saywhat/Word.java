@@ -6,29 +6,23 @@ package me.mattgd.saywhat;
  * @version 1.00 2016/5/19
  */
 
-public class Word 
-{	
+public class Word {
 	private String word;
 
-    public Word(String word) 
-    {
-    	this.word = word;
-    }
-    
-    public String getWord()
-    {
-    	return word;
-    }
-    
-    public void setWord(String word)
-    {
-    	this.word = word;
-    }
-    
-    public String toString()
-    {
-    	return word.toLowerCase();
-    }
-    
-    
+	public Word(String word) {
+		this.word = word;
+	}
+
+	public String getWord() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+
+	public String toString() {
+		return word.toLowerCase();
+	}
+
 }

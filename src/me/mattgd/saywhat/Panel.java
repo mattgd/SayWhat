@@ -6,29 +6,25 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-public class Panel extends JPanel
-{
+public class Panel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	
-	public Panel()
-	{
-    }
-	
-	public void paintComponent(Graphics g)
-	{
+
+	public Panel() {}
+
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-	    Font f = new Font("SansSerif", Font.BOLD, 14);
-	    FontMetrics fm = g.getFontMetrics(f);
-	    
-	    int cx = 250;
-	    int cy = 30;
-	    
-	    g.setFont(f);
-	    g.drawString("Say What!", cx, cy);
-	    
-	    cx += fm.stringWidth("Say What!");
+
+		Font f = new Font("SansSerif", Font.BOLD, 14);
+		FontMetrics fm = g.getFontMetrics(f);
+
+		int cx = 250;
+		int cy = 30;
+
+		g.setFont(f);
+		g.drawString("Say What!", cx, cy);
+
+		cx += fm.stringWidth("Say What!");
 	}
 
 }
