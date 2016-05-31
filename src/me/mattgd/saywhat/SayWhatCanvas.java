@@ -112,4 +112,5 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	    rect.setLocation(newX, newY);
 	    return false;
 	}
+	
 }
