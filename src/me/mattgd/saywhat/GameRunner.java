@@ -10,6 +10,16 @@ import java.util.Scanner;
 
 public class GameRunner {
 	
+	private static int difficulty = 0;
+	
+	public static void setDifficulty(int value) {
+		difficulty = value;
+	}
+	
+	public static int getDifficulty() {
+		return difficulty;
+	}
+	
 	public static void main(String[] args) {
 		String inputFile = "phrases.txt";
 		ArrayList<Phrase> phrases = new ArrayList<Phrase>();

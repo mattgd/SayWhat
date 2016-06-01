@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -11,13 +12,7 @@ import javax.swing.UIManager;
 
 public class PhraseLengthOptionPane {
 
-	public static void main(String[] args) {
-		new PhraseLengthOptionPane();
-	}
-
-	private int difficulty = 0;
-	
-	public PhraseLengthOptionPane() {
+	public PhraseLengthOptionPane(JFrame frame) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -37,17 +32,10 @@ public class PhraseLengthOptionPane {
 				int result = JOptionPane.showConfirmDialog(null, panel, "Difficulty Selection",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-				switch (result) {
-				case JOptionPane.OK_OPTION:
-					difficulty = comboBox.getSelectedIndex();
-					break;
-				}
+				if (result == JOptionPane.OK_OPTION) GameRunner.setDifficulty(comboBox.getSelectedIndex());
+				frame.setVisible(true);
 			}
 		});
-	}
-	
-	public int getDifficulty() {
-		return difficulty;
 	}
 
 }

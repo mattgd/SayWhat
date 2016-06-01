@@ -17,7 +17,7 @@ public class Frame extends JFrame {
 		contentPane.add(new Panel());
 		contentPane.add(new SayWhatCanvas());
 		
-		setVisible(true);
+		new PhraseLengthOptionPane(this);
 	}
 
 }

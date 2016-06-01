@@ -13,21 +13,41 @@ import java.awt.event.MouseMotionListener;
 public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 
-	private Rectangle rect = new Rectangle(0, 0, 100, 50);
-	private int preX, preY;
+	private Rectangle[] rectangles;
+	//private Rectangle rect = new Rectangle(0, 0, 100, 100);
+	//private int preX, preY;
 	private boolean isFirstTime = true;
 	private Rectangle area;
 	private boolean pressOut = false;
 
 	public SayWhatCanvas() {
+		int words = 5;
+		
+		switch (GameRunner.getDifficulty()) {
+		case 1: words = 7;
+			break;
+		case 2: words = 10;
+			break;
+		default: words = 5;
+		}
+		
+		rectangles = new Rectangle[words];
+		
+		for (int i = 0; i < words; i++) {
+			rectangles[i] = new Rectangle(0 + 10 * i, i + 10, 100, 100);
+		}
+		
 		setBackground(Color.white);
 		addMouseMotionListener(this);
 		addMouseListener(this);
 	}
 
 	public void mousePressed(MouseEvent e) {
-		preX = rect.x - e.getX();
-		preY = rect.y - e.getY();
+		Rectangle rect = selectRectangle(e.getX(), e.getY());
+		if (rect == null) return;
+		
+		int preX = rect.x - e.getX();
+		int preY = rect.y - e.getY();
 
 		if (rect.contains(e.getX(), e.getY())) {
 			updateLocation(e);
@@ -37,11 +57,13 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		if (!pressOut)
-			updateLocation(e);
+		if (!pressOut) updateLocation(e);
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		Rectangle rect = selectRectangle(e.getX(), e.getY());
+		if (rect == null) return;
+		
 		if (rect.contains(e.getX(), e.getY())) {
 			updateLocation(e);
 		} else {
@@ -55,8 +77,11 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	public void mouseEntered(MouseEvent e) {}
 
 	public void updateLocation(MouseEvent e) {
+		Rectangle rect = selectRectangle(e.getX(), e.getY());
+		if (rect == null) return;
+		
 		rect.setLocation(preX + e.getX(), preY + e.getY());
-		checkRectangleBounds();
+		checkRectangleBounds(rect);
 		repaint();
 	}
 
@@ -70,22 +95,24 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		int w = (int) dim.getWidth();
 		int h = (int) dim.getHeight();
 
-		if (isFirstTime) {
-			area = new Rectangle(dim);
-			rect.setLocation(w / 2 - 50, h / 2 - 25);
-			isFirstTime = false;
+		for (Rectangle rect : rectangles) {
+			if (isFirstTime) {
+				area = new Rectangle(dim);
+				rect.setLocation(w / 2 - 50, h / 2 - 25);
+				isFirstTime = false;
+			}
+
+			// Clears the rectangle that was previously drawn.
+			g2.setPaint(Color.white);
+			g2.fillRect(0, 0, w, h);
+
+			g2.setColor(Color.red);
+			g2.draw(rect);
+			g2.fill(rect);
 		}
-
-		// Clears the rectangle that was previously drawn.
-		g2.setPaint(Color.white);
-		g2.fillRect(0, 0, w, h);
-
-		g2.setColor(Color.red);
-		g2.draw(rect);
-		g2.fill(rect);
 	}
 
-	private boolean checkRectangleBounds() {
+	private boolean checkRectangleBounds(Rectangle rect) {	
 		if (area == null)
 			return false;
 		if (area.contains(rect.x, rect.y, 100, 50))
@@ -105,6 +132,14 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 
 		rect.setLocation(newX, newY);
 		return false;
+	}
+	
+	private Rectangle selectRectangle(double x, double y) {
+		for (Rectangle rect : rectangles) {
+			if (x < rect.getMaxX() && x > rect.getMinX() && y < rect.getMaxY() && y > rect.getMinY()) return rect;
+		}
+		
+		return null;
 	}
 
 }
