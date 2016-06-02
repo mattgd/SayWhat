@@ -26,7 +26,6 @@ public class GameRunner {
 		ArrayList<Phrase> medium = new ArrayList<Phrase>();
 		ArrayList<Phrase> hard = new ArrayList<Phrase>();
 		
-
 		try {
 			Scanner reader = new Scanner(new File(inputFile));
 			while (reader.hasNext()) {
