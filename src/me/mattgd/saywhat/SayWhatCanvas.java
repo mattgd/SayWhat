@@ -16,9 +16,9 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	private WhatRectangle[] rectangles;
 	//private Rectangle rect = new Rectangle(0, 0, 100, 100);
 	//private int preX, preY;
-	private boolean isFirstTime = true;
+	//private boolean isFirstTime = true;
 	//private Rectangle area;
-	private boolean pressOut = false;
+	//private boolean pressOut = false;
 
 	public SayWhatCanvas() {
 		int words = 5;
@@ -52,22 +52,23 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		if (rect.contains(e.getX(), e.getY())) {
 			updateLocation(e);
 		} else {
-			pressOut = true;
+			rect.setPressOut(true);
 		}
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		if (!pressOut) updateLocation(e);
+		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
+		if (!rect.pressOut()) updateLocation(e);
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		Rectangle rect = selectRectangle(e.getX(), e.getY());
+		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
 		if (rect == null) return;
 		
 		if (rect.contains(e.getX(), e.getY())) {
 			updateLocation(e);
 		} else {
-			pressOut = false;
+			rect.setPressOut(false);
 		}
 	}
 
@@ -96,10 +97,10 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		int h = (int) dim.getHeight();
 
 		for (WhatRectangle rect : rectangles) {
-			if (isFirstTime) {
+			if (rect.isFirstTime()) {
 				rect.setArea(new Rectangle(dim));
 				rect.setLocation(w / 2 - 50, h / 2 - 25);
-				isFirstTime = false;
+				rect.setFirstTime(false);
 			}
 
 			// Clears the rectangle that was previously drawn.

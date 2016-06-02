@@ -34,6 +34,10 @@ public class WhatRectangle extends Rectangle {
 		return isFirstTime;
 	}
 	
+	public void setFirstTime(boolean isFirstTime) {
+		this.isFirstTime = isFirstTime;
+	}
+	
 	public Rectangle getArea() {
 		return area;
 	}
