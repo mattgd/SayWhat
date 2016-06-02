@@ -13,11 +13,11 @@ import java.awt.event.MouseMotionListener;
 public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 
-	private Rectangle[] rectangles;
+	private WhatRectangle[] rectangles;
 	//private Rectangle rect = new Rectangle(0, 0, 100, 100);
 	//private int preX, preY;
 	private boolean isFirstTime = true;
-	private Rectangle area;
+	//private Rectangle area;
 	private boolean pressOut = false;
 
 	public SayWhatCanvas() {
@@ -31,10 +31,10 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		default: words = 5;
 		}
 		
-		rectangles = new Rectangle[words];
+		rectangles = new WhatRectangle[words];
 		
 		for (int i = 0; i < words; i++) {
-			rectangles[i] = new Rectangle(0 + 10 * i, i + 10, 100, 100);
+			rectangles[i] = new WhatRectangle(0 + 10 * i, i + 10, 100, 100);
 		}
 		
 		setBackground(Color.white);
@@ -43,11 +43,11 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	}
 
 	public void mousePressed(MouseEvent e) {
-		Rectangle rect = selectRectangle(e.getX(), e.getY());
+		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
 		if (rect == null) return;
 		
-		int preX = rect.x - e.getX();
-		int preY = rect.y - e.getY();
+		rect.setPreX(rect.x - e.getX());
+		rect.setPreY(rect.y - e.getY());
 
 		if (rect.contains(e.getX(), e.getY())) {
 			updateLocation(e);
@@ -77,10 +77,10 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 	public void mouseEntered(MouseEvent e) {}
 
 	public void updateLocation(MouseEvent e) {
-		Rectangle rect = selectRectangle(e.getX(), e.getY());
+		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
 		if (rect == null) return;
 		
-		rect.setLocation(preX + e.getX(), preY + e.getY());
+		rect.setLocation(rect.getPreX() + e.getX(), rect.getPreY() + e.getY());
 		checkRectangleBounds(rect);
 		repaint();
 	}
@@ -95,9 +95,9 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		int w = (int) dim.getWidth();
 		int h = (int) dim.getHeight();
 
-		for (Rectangle rect : rectangles) {
+		for (WhatRectangle rect : rectangles) {
 			if (isFirstTime) {
-				area = new Rectangle(dim);
+				rect.setArea(new Rectangle(dim));
 				rect.setLocation(w / 2 - 50, h / 2 - 25);
 				isFirstTime = false;
 			}
@@ -112,7 +112,9 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		}
 	}
 
-	private boolean checkRectangleBounds(Rectangle rect) {	
+	private boolean checkRectangleBounds(WhatRectangle rect) {
+		Rectangle area = rect.getArea();
+		
 		if (area == null)
 			return false;
 		if (area.contains(rect.x, rect.y, 100, 50))
@@ -134,8 +136,8 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		return false;
 	}
 	
-	private Rectangle selectRectangle(double x, double y) {
-		for (Rectangle rect : rectangles) {
+	private WhatRectangle selectRectangle(double x, double y) {
+		for (WhatRectangle rect : rectangles) {
 			if (x < rect.getMaxX() && x > rect.getMinX() && y < rect.getMaxY() && y > rect.getMinY()) return rect;
 		}
 		
