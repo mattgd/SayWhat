@@ -2,18 +2,18 @@ package me.mattgd.saywhat;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
-public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionListener {
+public class SayWhatCanvas extends Canvas implements MouseListener {
 	private static final long serialVersionUID = 1L;
 
 	private WhatRectangle[] rectangles;
+	private Color[] colors = { Color.red, Color.orange, Color.yellow, Color.green, Color.cyan, Color.blue, Color.magenta, Color.pink, Color.gray, Color.black };
 	//private Rectangle rect = new Rectangle(0, 0, 100, 100);
 	//private int preX, preY;
 	//private boolean isFirstTime = true;
@@ -30,55 +30,29 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 			break;
 		default: words = 5;
 		}
-		
+
 		rectangles = new WhatRectangle[words];
-		
+
+		int startX = 0;
 		for (int i = 0; i < words; i++) {
-			rectangles[i] = new WhatRectangle(0 + 10 * i, i + 10, 100, 100);
+			rectangles[i] = new WhatRectangle(startX, 0, 100, 100);
+			startX += 125;
 		}
 		
 		setBackground(Color.white);
-		addMouseMotionListener(this);
 		addMouseListener(this);
 	}
 
-	public void mousePressed(MouseEvent e) {
-		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
-		if (rect == null) return;
+	public void mouseClicked(MouseEvent e) {
 		
-		rect.setPreX(rect.x - e.getX());
-		rect.setPreY(rect.y - e.getY());
-
-		if (rect.contains(e.getX(), e.getY())) {
-			updateLocation(e);
-		} else {
-			rect.setPressOut(true);
-		}
 	}
-
-	public void mouseDragged(MouseEvent e) {
-		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
-		if (!rect.pressOut()) updateLocation(e);
-	}
-
-	public void mouseReleased(MouseEvent e) {
-		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
-		if (rect == null) return;
-		
-		if (rect.contains(e.getX(), e.getY())) {
-			updateLocation(e);
-		} else {
-			rect.setPressOut(false);
-		}
-	}
-
+	
 	public void mouseMoved(MouseEvent e) {}
-	public void mouseClicked(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
 	public void mouseEntered(MouseEvent e) {}
 
 	public void updateLocation(MouseEvent e) {
-		WhatRectangle rect = selectRectangle(e.getX(), e.getY());
+		WhatRectangle rect = selectRectangle(e.getPoint());
 		if (rect == null) return;
 		
 		rect.setLocation(rect.getPreX() + e.getX(), rect.getPreY() + e.getY());
@@ -92,22 +66,11 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 
 	public void update(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		Dimension dim = getSize();
-		int w = (int) dim.getWidth();
-		int h = (int) dim.getHeight();
 
-		for (WhatRectangle rect : rectangles) {
-			if (rect.isFirstTime()) {
-				rect.setArea(new Rectangle(dim));
-				rect.setLocation(w / 2 - 50, h / 2 - 25);
-				rect.setFirstTime(false);
-			}
-
-			// Clears the rectangle that was previously drawn.
-			g2.setPaint(Color.white);
-			g2.fillRect(0, 0, w, h);
-
-			g2.setColor(Color.red);
+		for (int i = 0; i < rectangles.length; i++) {
+			WhatRectangle rect = rectangles[i];
+			
+			g2.setColor(i < 10 ? colors[i] : colors[colors.length - 1]);
 			g2.draw(rect);
 			g2.fill(rect);
 		}
@@ -137,12 +100,24 @@ public class SayWhatCanvas extends Canvas implements MouseListener, MouseMotionL
 		return false;
 	}
 	
-	private WhatRectangle selectRectangle(double x, double y) {
+	private WhatRectangle selectRectangle(Point p) {
 		for (WhatRectangle rect : rectangles) {
-			if (x < rect.getMaxX() && x > rect.getMinX() && y < rect.getMaxY() && y > rect.getMinY()) return rect;
+			if (rect.contains(p)) return rect;
 		}
 		
 		return null;
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

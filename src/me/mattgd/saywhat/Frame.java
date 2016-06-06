@@ -10,7 +10,7 @@ public class Frame extends JFrame {
 
 	public Frame() {
 		setTitle("Say What");
-		setSize(600, 600);
+		setSize(1024, 768);
 		setLocation(10, 200);
 
 		Container contentPane = getContentPane();
