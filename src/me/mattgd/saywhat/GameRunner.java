@@ -3,8 +3,6 @@ package me.mattgd.saywhat;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
-import java.util.Random;
 import java.util.Scanner;
 
 public class GameRunner {
@@ -38,7 +36,9 @@ public class GameRunner {
 		
 		Scanner sc = new Scanner(System.in);
 		ArrayList<Phrase> phrases = new ArrayList<Phrase>();
-
+		
+		System.out.println("Press Enter to submit input.");
+		
 		acceptingInput = true;
 
 		switch (difficulty) {
@@ -58,6 +58,8 @@ public class GameRunner {
 			System.out.println("Did not select difficulty. Easy difficulty automatically selected.");
 		}
 
+		String input = "";
+		
 		for (Phrase p : phrases) {
 			System.out.println();
 			
@@ -67,16 +69,17 @@ public class GameRunner {
 			}
 
 			System.out.println("\nEnter the phrase in the correct order:");
-			Phrase phrase = new Phrase(sc.nextLine().trim());
-
-			System.out.println("{" + phrase + "}");
-
-			System.out.println(p);
+			
+			input = sc.nextLine().trim();
+			
+			Phrase phrase = new Phrase(input);
+			
+			System.out.println("You entered: \"" + input + "\"");
 
 			if (p.equalsIgnoreCase(phrase)) {
-				System.out.println("\nNice work!");
+				System.out.println("\nCorrect! Nice work.");
 			} else {
-				System.out.println("\nIncorrect!");
+				System.out.println("\nYour answer is incorrect.");
 			}
 		}
 		
@@ -88,7 +91,7 @@ public class GameRunner {
 			GameRunner.setRunning(false);
 			return;
 		} else if (input.equalsIgnoreCase("help")) {
-
+			
 		} else {
 			if (GameRunner.isAcceptingInput()) {
 				System.out.println(input);

@@ -42,8 +42,7 @@ public class TextAreaOutputStream extends OutputStream {
 		appender = null;
 	}
 
-	public synchronized void flush() {
-	}
+	public synchronized void flush() {}
 
 	public synchronized void write(int val) {
 		oneByte[0] = (byte) val;
@@ -138,4 +137,4 @@ public class TextAreaOutputStream extends OutputStream {
 		static private final String EOL2 = System.getProperty("line.separator", EOL1);
 	}
 
-} /* END PUBLIC CLASS */
+}

@@ -1,22 +1,23 @@
 package me.mattgd.saywhat;
 
-/**
- * @(#)Phrase.java
- *
- * @author Steve G and Matty D
- * @version 1.00 2016/5/19
- */
-
 import java.util.*;
 
-class Phrase implements Comparable<Phrase> {
+public class Phrase implements Comparable<Phrase> {
+
+	private final String phrase;
 	private ArrayList<Word> words = new ArrayList<Word>();
 
-	public Phrase(String phrase) {
+	public Phrase(final String phrase) {
+		this.phrase = phrase;
+
 		String[] cut = phrase.split(" ");
 		for (int i = 0; i < cut.length; i++) {
 			words.add(new Word(cut[i]));
 		}
+	}
+
+	public String getCorrectPhrase() {
+		return phrase;
 	}
 
 	public ArrayList<Word> randomize() {
@@ -42,8 +43,8 @@ class Phrase implements Comparable<Phrase> {
 														// exactly equal
 	}
 
-	public ArrayList<Word> getPhrase() // passes arrayList to the game
-	{
+	// Passes ArrayList to the game
+	public ArrayList<Word> getPhrase() {
 		return words;
 	}
 
@@ -52,13 +53,7 @@ class Phrase implements Comparable<Phrase> {
 	}
 
 	public boolean equalsIgnoreCase(Phrase phrase) {
-		boolean matches = true;
-		
-		for (Word word : phrase.getPhrase()) {
-			if (!getPhrase().contains(word)) matches = false;
-		}
-		
-		return matches;
+		return getCorrectPhrase().equalsIgnoreCase(phrase.getCorrectPhrase());
 	}
 
 }
