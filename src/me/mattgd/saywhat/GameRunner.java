@@ -1,30 +1,21 @@
 package me.mattgd.saywhat;
 
-/**
- * @author Steve Greene and mattgd
- */
-
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameRunner {
 
-	private static int difficulty = 0;
-
-	public static void setDifficulty(int value) {
-		difficulty = value;
-	}
-
-	public static int getDifficulty() {
-		return difficulty;
-	}
-
 	public static void main(String[] args) {
+		running = true;
+
 		String inputFile = "phrases.txt";
 		ArrayList<Phrase> easy = new ArrayList<Phrase>();
 		ArrayList<Phrase> medium = new ArrayList<Phrase>();
 		ArrayList<Phrase> hard = new ArrayList<Phrase>();
+
+		new DifficultyOptionPane(); // This brings up the GUI
 
 		try {
 			Scanner reader = new Scanner(new File(inputFile));
@@ -40,48 +31,92 @@ public class GameRunner {
 			}
 			reader.close();
 		} catch (Exception e) {
-			System.out.println("Error located " + e.getMessage());
-		}
-
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Would you like a GUI? y/n");
-		if (scan.nextLine().equalsIgnoreCase("y")) {
-			new Frame(); // This brings up the window
-		} else {
-			ArrayList<Phrase> phrases = new ArrayList<Phrase>();
-			System.out.println("Enter difficulty: e/m/h");
-			String check = scan.nextLine().trim();
-			
-			if (check.equalsIgnoreCase("e")) {
-				phrases = easy;
-			} else if (check.equalsIgnoreCase("m")) {
-				phrases = medium;
-			} else {
-				phrases = hard;
-			}
-
-			for (int i = 0; i < phrases.size(); i++) {
-				ArrayList<Word> mixed = phrases.get(i).randomize();
-				for (int x = 0; x < mixed.size(); x++) {
-					System.out.print(mixed.get(x) + " ");
-				}
-				System.out.println("\nEnter the phrase in the correct order\n");
-				Phrase phrase = new Phrase(scan.nextLine().trim());
-				
-				System.out.println("{" + phrase + "}");
-				
-				System.out.println(phrases.get(i));
-				
-				if (phrases.get(i).equalsIgnoreCase(phrase)) {
-					System.out.println("\nNice work!");
-				} else {
-					System.out.println("\nIncorrect!");
-				}
-			}
+			System.out.println("Error located: " + e.getMessage());
 		}
 		
-		scan.close();
+		Scanner sc = new Scanner(System.in);
+		ArrayList<Phrase> phrases = new ArrayList<Phrase>();
 
+		acceptingInput = true;
+
+		switch (difficulty) {
+		case 0:
+			System.out.println("Easy difficulty selected.");
+			phrases = easy;
+			break;
+		case 1:
+			System.out.println("Medium difficulty selected.");
+			phrases = medium;
+			break;
+		case 2:
+			System.out.println("Hard difficulty selected.");
+			phrases = hard;
+			break;
+		default:
+			System.out.println("Did not select difficulty. Easy difficulty automatically selected.");
+		}
+
+		for (Phrase p : phrases) {
+			System.out.println();
+			
+			List<Word> mixed = p.randomize();
+			for (int x = 0; x < mixed.size(); x++) {
+				System.out.print(mixed.get(x) + " ");
+			}
+
+			System.out.println("\nEnter the phrase in the correct order:");
+			Phrase phrase = new Phrase(sc.nextLine().trim());
+
+			System.out.println("{" + phrase + "}");
+
+			System.out.println(p);
+
+			if (p.equalsIgnoreCase(phrase)) {
+				System.out.println("\nNice work!");
+			} else {
+				System.out.println("\nIncorrect!");
+			}
+		}
+
+		sc.close();
+	}
+
+	public static void parseInput(final String input) {
+		if (input.equalsIgnoreCase("quit") || input.equalsIgnoreCase("q")) {
+			GameRunner.setRunning(false);
+			return;
+		} else if (input.equalsIgnoreCase("help")) {
+
+		} else {
+			if (GameRunner.isAcceptingInput()) {
+				System.out.println(input);
+			} else {
+				System.out.println("There is no phrase to check with.");
+			}
+		}
+	}
+
+	private static int difficulty = 0;
+	private static boolean running = false, acceptingInput = false;
+
+	public static void setDifficulty(int value) {
+		difficulty = value;
+	}
+
+	public static int getDifficulty() {
+		return difficulty;
+	}
+
+	public static void setRunning(boolean value) {
+		running = value;
+	}
+
+	public static boolean isRunning() {
+		return running;
+	}
+
+	public static boolean isAcceptingInput() {
+		return acceptingInput;
 	}
 
 }

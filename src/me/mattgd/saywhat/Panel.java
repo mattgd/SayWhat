@@ -15,10 +15,10 @@ public class Panel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		Font f = new Font("SansSerif", Font.BOLD, 14);
+		Font f = new Font("SansSerif", Font.BOLD, 16);
 		FontMetrics fm = g.getFontMetrics(f);
-
-		int cx = Frame.WIDTH / 2;
+		
+		int cx = (Frame.WIDTH / 2) - 55;
 		int cy = 20;
 
 		g.setFont(f);
