@@ -19,27 +19,11 @@ class Phrase implements Comparable<Phrase> {
 		}
 	}
 
-	public ArrayList<Word> randomize() {
+	public ArrayList<Word> randomize() 
+	{
 		ArrayList<Word> newOrder = words;
-		for (int i = 0; i < newOrder.size(); i++) {
-			newOrder.set(i, newOrder.get((int) (Math.random() * newOrder.size())));
-		}
-
-		int count = 0;
-
-		for (int i = 0; i < newOrder.size(); i++) {
-			if (newOrder.get(i).getWord().equals((words.get(i).getWord())))
-				;
-			{
-				count++;
-			}
-		}
-
-		// modify this to change degree of mixed-up-ness
-		if (count == newOrder.size()) {
-			return randomize();
-		}
-
+		long seed = System.nanoTime();
+		Collections.shuffle(newOrder, new Random(seed));
 		return newOrder;
 	}
 
