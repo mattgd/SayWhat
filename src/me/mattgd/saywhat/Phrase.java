@@ -19,8 +19,7 @@ class Phrase implements Comparable<Phrase> {
 		}
 	}
 
-	public ArrayList<Word> randomize() 
-	{
+	public ArrayList<Word> randomize() {
 		ArrayList<Word> newOrder = words;
 		long seed = System.nanoTime();
 		Collections.shuffle(newOrder, new Random(seed));
@@ -34,7 +33,7 @@ class Phrase implements Comparable<Phrase> {
 			r += " ";
 		}
 
-		return r;
+		return r.trim();
 	}
 
 	public int compareTo(Phrase phrase) {
@@ -51,4 +50,15 @@ class Phrase implements Comparable<Phrase> {
 	public int getNumWords() {
 		return words.size();
 	}
+
+	public boolean equalsIgnoreCase(Phrase phrase) {
+		boolean matches = true;
+		
+		for (Word word : phrase.getPhrase()) {
+			if (!getPhrase().contains(word)) matches = false;
+		}
+		
+		return matches;
+	}
+
 }
