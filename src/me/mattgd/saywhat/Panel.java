@@ -18,8 +18,8 @@ public class Panel extends JPanel {
 		Font f = new Font("SansSerif", Font.BOLD, 14);
 		FontMetrics fm = g.getFontMetrics(f);
 
-		int cx = 250;
-		int cy = 30;
+		int cx = Frame.WIDTH / 2;
+		int cy = 20;
 
 		g.setFont(f);
 		g.drawString("Say What!", cx, cy);
