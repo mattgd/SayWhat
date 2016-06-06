@@ -6,6 +6,8 @@ package me.mattgd.saywhat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameRunner {
@@ -61,18 +63,21 @@ public class GameRunner {
 			}
 
 			for (int i = 0; i < phrases.size(); i++) {
+				String correct = phrases.get(i).toString().trim();
 				ArrayList<Word> mixed = phrases.get(i).randomize();
+				
 				for (int x = 0; x < mixed.size(); x++) {
 					System.out.print(mixed.get(x) + " ");
 				}
+
 				System.out.println("\nEnter the phrase in the correct order\n");
 				Phrase phrase = new Phrase(scan.nextLine().trim());
 				
 				System.out.println("{" + phrase + "}");
 				
-				System.out.println(phrases.get(i));
+				System.out.println(correct);
 				
-				if (phrases.get(i).equalsIgnoreCase(phrase)) {
+				if (correct.equals(phrase.toString())) {
 					System.out.println("\nNice work!");
 				} else {
 					System.out.println("\nIncorrect!");

@@ -10,7 +10,7 @@ package me.mattgd.saywhat;
 import java.util.*;
 
 class Phrase implements Comparable<Phrase> {
-	ArrayList<Word> words = new ArrayList<Word>();
+	private ArrayList<Word> words = new ArrayList<Word>();
 
 	public Phrase(String phrase) {
 		String[] cut = phrase.split(" ");
