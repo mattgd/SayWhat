@@ -3,6 +3,8 @@ package me.mattgd.saywhat;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameRunner {
@@ -77,7 +79,7 @@ public class GameRunner {
 				System.out.println("\nIncorrect!");
 			}
 		}
-
+		
 		sc.close();
 	}
 
