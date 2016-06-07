@@ -2,7 +2,9 @@ package me.mattgd.saywhat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameRunner {
@@ -58,7 +60,10 @@ public class GameRunner {
 			System.out.println("Did not select difficulty. Easy difficulty automatically selected.");
 		}
 
+		long seed = System.nanoTime();
+		Collections.shuffle(phrases, new Random(seed));
 		String input = "";
+		int count = 0;
 		
 		for (Phrase p : phrases) {
 			System.out.println();
@@ -78,11 +83,13 @@ public class GameRunner {
 
 			if (p.equalsIgnoreCase(phrase)) {
 				System.out.println("\nCorrect! Nice work.");
+				count++;
 			} else {
 				System.out.println("\nYour answer is incorrect.");
 			}
+			System.out.println(count + "/" + phrases.size() + " correct so far");
 		}
-		
+		System.out.println("Thanks for playing!");
 		sc.close();
 	}
 
