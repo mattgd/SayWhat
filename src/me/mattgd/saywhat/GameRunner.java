@@ -10,8 +10,6 @@ import java.util.Scanner;
 public class GameRunner {
 
 	public static void main(String[] args) {
-		running = true;
-
 		String inputFile = "phrases.txt";
 		ArrayList<Phrase> easy = new ArrayList<Phrase>();
 		ArrayList<Phrase> medium = new ArrayList<Phrase>();
@@ -41,8 +39,6 @@ public class GameRunner {
 		
 		System.out.println("Press Enter to submit input.");
 		
-		acceptingInput = true;
-
 		switch (difficulty) {
 		case 0:
 			System.out.println("Easy difficulty selected.");
@@ -77,39 +73,31 @@ public class GameRunner {
 			
 			input = sc.nextLine().trim();
 			
-			Phrase phrase = new Phrase(input);
-			
-			System.out.println("You entered: \"" + input + "\"");
-
-			if (p.equalsIgnoreCase(phrase)) {
-				System.out.println("\nCorrect! Nice work.");
-				count++;
+			if (input.equalsIgnoreCase("quit") || input.equalsIgnoreCase("q")) {
+				System.exit(0);
+			} else if (input.equalsIgnoreCase("help") || input.equalsIgnoreCase("?")) {
+				help();
 			} else {
-				System.out.println("\nYour answer is incorrect.");
+				Phrase phrase = new Phrase(input);
+				
+				System.out.println("You entered: \"" + input + "\"");
+
+				if (p.equalsIgnoreCase(phrase)) {
+					System.out.println("\nCorrect! Nice work.");
+					count++;
+				} else {
+					System.out.println("\nYour answer is incorrect. The correct answer is: \n" + p.getCorrectPhrase());
+				}
+				
+				System.out.println(count + "/" + phrases.size() + " correct so far.");
 			}
-			System.out.println(count + "/" + phrases.size() + " correct so far");
 		}
+		
 		System.out.println("Thanks for playing!");
 		sc.close();
 	}
 
-	public static void parseInput(final String input) {
-		if (input.equalsIgnoreCase("quit") || input.equalsIgnoreCase("q")) {
-			GameRunner.setRunning(false);
-			return;
-		} else if (input.equalsIgnoreCase("help")) {
-			
-		} else {
-			if (GameRunner.isAcceptingInput()) {
-				System.out.println(input);
-			} else {
-				System.out.println("There is no phrase to check with.");
-			}
-		}
-	}
-
 	private static int difficulty = 0;
-	private static boolean running = false, acceptingInput = false;
 
 	public static void setDifficulty(int value) {
 		difficulty = value;
@@ -118,17 +106,10 @@ public class GameRunner {
 	public static int getDifficulty() {
 		return difficulty;
 	}
-
-	public static void setRunning(boolean value) {
-		running = value;
-	}
-
-	public static boolean isRunning() {
-		return running;
-	}
-
-	public static boolean isAcceptingInput() {
-		return acceptingInput;
+	
+	private static void help() {
+		System.out.println("\nWelcome to Say What!\nScrambled phrases will be displayed and your job is to unscramble them.\n"
+				+ "Type your answer in the box and press Enter to check it.");
 	}
 
 }
